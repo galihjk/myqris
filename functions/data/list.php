@@ -1,0 +1,10 @@
+<?php
+function data__list($dir){
+    $data_list = [];
+    $scandir = scandir("data/$dir");
+    foreach($scandir as $file){
+        if(in_array($file, ['..', '.', 'info.txt'])) continue;
+        $data_list[] = substr($file, 0, -5);
+    }
+    return $data_list;
+}

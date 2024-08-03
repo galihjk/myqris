@@ -57,10 +57,7 @@ if(!empty($_POST)){
     ?>
     <h3>Lakukan Verifikasi</h3>
     <div>
-        Pendaftaran berhasil, silakan lakukan verifikasi melalui whatsapp berikut:
-    </div>
-    <div>
-        <a target='_blank' href='<?=$linkwhatsapp?>'><?=$linkwhatsapp?></a>
+        Pendaftaran berhasil, silakan <a target='_blank' href='<?=$linkwhatsapp?>'>lakukan verifikasi</a>
     </div>
     <div>
         <hr>

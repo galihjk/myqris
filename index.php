@@ -44,10 +44,7 @@ if(empty($user['verified_at'])){
     $linkwhatsapp = "https://api.whatsapp.com/send/?phone=$phoneNum&text=$whatsaptext_encode&type=phone_number&app_absent=0";
     ?>
     <div>
-        User anda belum diaktivasi, silakan lakukan verifikasi melalui whatsapp berikut:
-    </div>
-    <div>
-        <a target='_blank' href='<?=$linkwhatsapp?>'><?=$linkwhatsapp?></a>
+        User anda belum diaktivasi, silakan <a target='_blank' href='<?=$linkwhatsapp?>'>lakukan verifikasi</a>
     </div>
     <hr>
     <div>

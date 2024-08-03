@@ -206,7 +206,7 @@ if(!empty($_GET['success'])){
     <?php
 }
 ?>
-<table border="1">
+<table class="table">
     <tr>
         <td>
             <strong>No</strong>

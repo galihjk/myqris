@@ -8,9 +8,14 @@ function cek_login(){
         header("Location: $location");
         exit();
     }
-    $q = "select * from users where 
-    id=".f("str.dbq")($_SESSION['user']['id']);
-    $userdata = f("db.select_one")($q);
+    if($_SESSION['user']['id'] == 'sys'){
+        $userdata = $_SESSION['user'];
+    }
+    else{
+        $q = "select * from users where 
+        id=".f("str.dbq")($_SESSION['user']['id']);
+        $userdata = f("db.select_one")($q);        
+    }
     return $userdata;
 }
     

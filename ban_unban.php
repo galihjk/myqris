@@ -30,13 +30,13 @@ if(!empty($_GET['ban_username'])){
 $banned_users = f("db.q")("select * from users where banned_at is not null order by banned_at");
 f("webview._layout.base")("start");
 ?>
-<h1>My Qris (prototype 2)</h1>
+<h1><img src="assets/img/logo1.jpg" style="width: 121px;"></h1>
 <h2>Ban / Unban User Account</h2>
 <hr>
 <form>Ban User <input type="text" placeholder="ban user_name" required name="ban_username"/> <input type="submit" value="BAN USER!"/></form>
 <hr>
 Banned Users:
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>No</th>

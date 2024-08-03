@@ -1,4 +1,4 @@
-<h1>My Qris (prototype 2)</h1>
+<h1><img src="assets/img/logo1.jpg" style="width: 121px;"></h1>
 <hr>
 <?php
 include("init.php");

@@ -108,7 +108,7 @@ if(!empty($_GET['trx'])){
 }
 f("webview._layout.base")("start");
 ?>
-<h1>My Qris (prototype 2)</h1>
+<h1><img src="assets/img/logo1.jpg" style="width: 121px;"></h1>
 <hr>
 <div style="text-align: center;">
     <form id="myForm" method="POST" action="?u=<?=urlencode($_GET['u'])?>">

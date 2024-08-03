@@ -22,7 +22,7 @@ function webview___layout__base($section, $data = []){
                 <link href="css/styles.css" rel="stylesheet" />
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
             </head>
-            <body class="<?=$data['body_class']?>">
+            <body class="text-center px-3 <?=$data['body_class']?>">
         <?php
     }
     elseif($section == "end"){

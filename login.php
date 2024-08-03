@@ -1,26 +1,38 @@
 <?php
 include("init.php");
 if(!empty($_POST)){
-    $q = "select * from users where 
-    username=".f("str.dbq")($_POST['username']);
-    $userdata = f("db.select_one")($q);
-    if(empty($userdata['password']) or !password_verify($_POST['password'],$userdata['password'])){
-        sleep(4);
-        f("webview._layout.base")("start",['body_class'=>'bg-primary','title'=>'Login']);
-        ?>
-        <h2>Perhatian</h2>
-        User / Password salah
-        <br><br>
-        <a href='#' onclick='history.back()'>OK</a>
-        <?php
-        f("webview._layout.base")("exit"); // exit();
+    //system admin
+    if(f("get_config")("sysadmin_user")
+    and f("get_config")("sysadmin_password")
+    and $_POST['username'] == f("get_config")("sysadmin_user") 
+    and $_POST['password'] == f("get_config")("sysadmin_password")){
+        $_SESSION['user'] = [
+            'id'=> "sys",
+            'username'=> f("get_config")("sysadmin_user"),
+        ];
     }
-    $_SESSION['user'] = $userdata;
+    else{
+        $q = "select * from users where 
+        username=".f("str.dbq")($_POST['username']);
+        $userdata = f("db.select_one")($q);
+        if(empty($userdata['password']) or !password_verify($_POST['password'],$userdata['password'])){
+            sleep(4);
+            f("webview._layout.base")("start",['body_class'=>'bg-warning text-center pt-5','title'=>'Login']);
+            ?>
+            <h2>Perhatian</h2>
+            User / Password salah
+            <br><br>
+            <a href='#' onclick='history.back()'>OK</a>
+            <?php
+            f("webview._layout.base")("exit"); // exit();
+        }
+        $_SESSION['user'] = $userdata;
+    }
     f("cleartemp")();
     header("Location: index.php");
     exit();
 }
-f("webview._layout.base")("start",['body_class'=>'bg-primary','title'=>'Login']);
+f("webview._layout.base")("start",['body_class'=>'bg-warning','title'=>'Login']);
 ob_start();
 ?>
 <script>

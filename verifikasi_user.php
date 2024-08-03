@@ -43,10 +43,10 @@ if(!empty($_GET['acc'])){
 $unverified_users = f("db.q")("select * from users where banned_at is null and verified_at is null order by id");
 f("webview._layout.base")("start");
 ?>
-<h1>My Qris (prototype 2)</h1>
+<h1><img src="assets/img/logo1.jpg" style="width: 121px;"></h1>
 <h2>Verifikasi Akun</h2>
 <hr>
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>No</th>

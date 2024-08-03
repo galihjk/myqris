@@ -35,7 +35,7 @@ else{
 ?>
 <h2>Transaksi Berhasil</h2>
 <div>
-    <table>
+    <table class="table">
         <tr>
             <td><strong>Dari</strong></td>
             <td> &nbsp; : &nbsp; </td>

@@ -1,10 +1,18 @@
-<h1>My Qris (prototype 2)</h1>
-<hr>
 <?php
 include("init.php");
 $user = f("cek_login")();
 f("webview._layout.base")("start");
-echo $user['username']; echo "<hr><br>";
+?>
+<div class="bg-dark text-warning p-2 rounded mb-4">
+    <div class="bg-white rounded p-1 float-start">
+        <img src="assets/img/logo1.jpg" style="width: 110px;">
+    </div>
+    <div class="text-end m-2">
+        <?=$user['username']?>
+        <?=($user['id'] == "sys"?" (System Administrator)":"")?>
+    </div>
+</div>
+<?php
 if(!empty($user['banned_at'])){
     ?>
     User anda banned. Silakan hubungi admin.
@@ -17,7 +25,7 @@ if(!empty($user['banned_at'])){
 if(in_array($user['username'],f("get_config")("admins"))){
     ?>
     <div>
-        <h3>Admin</h3>
+        <h3 class="mb-3">Admin</h3>
         <div>
             <a target='_blank' href='verifikasi_user.php'>Verifikasi User</a><br><br>
         </div>
@@ -38,15 +46,19 @@ if(in_array($user['username'],f("get_config")("admins"))){
     <?php
 }
 if(empty($user['verified_at'])){
-    $whatsaptext = "Halo, admin. Saya ingin memverifikasi akun saya: \"".$user['username']."\". \nMohon informasi selanjutnya.";
-    $whatsaptext_encode = urlencode($whatsaptext);
-    $phoneNum = f("get_config")("no_wa_admin");
-    $linkwhatsapp = "https://api.whatsapp.com/send/?phone=$phoneNum&text=$whatsaptext_encode&type=phone_number&app_absent=0";
+    if($user['id'] != 'sys'){
+        $whatsaptext = "Halo, admin. Saya ingin memverifikasi akun saya: \"".$user['username']."\". \nMohon informasi selanjutnya.";
+        $whatsaptext_encode = urlencode($whatsaptext);
+        $phoneNum = f("get_config")("no_wa_admin");
+        $linkwhatsapp = "https://api.whatsapp.com/send/?phone=$phoneNum&text=$whatsaptext_encode&type=phone_number&app_absent=0";
+        ?>
+        <div>
+            User anda belum diaktivasi, silakan <a target='_blank' href='<?=$linkwhatsapp?>'>lakukan verifikasi</a>
+        </div>
+        <hr>
+        <?php
+    }
     ?>
-    <div>
-        User anda belum diaktivasi, silakan <a target='_blank' href='<?=$linkwhatsapp?>'>lakukan verifikasi</a>
-    </div>
-    <hr>
     <div>
         <a href='logout.php'>Logout</a><br><br>
     </div>

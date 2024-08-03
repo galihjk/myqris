@@ -4,11 +4,16 @@ $user = f("cek_login")();
 if(!in_array($user['username'],f("get_config")("admins"))) dd("menu ini hanya untuk admin");
 f("webview._layout.base")("start");
 $unpaid_list = f("data.list")("trx");
-if(empty($unpaid_list)){
-    dd("Tidak ada transaksi yang belum dibayar.");
+if(!empty($_GET['hapus_semua']) && $_GET['hapus_semua'] == "expired"){
+    ?>
+    <script>
+        alert("underconst");
+        window.location.replace("check_unpaid_all.php");
+    </script>
+    <?php
 }
 ?>
-<table border="1">
+<table class="table">
     <tr>
         <th>No</th>
         <th>Tanggal</th>
@@ -43,5 +48,6 @@ if(empty($unpaid_list)){
     ?>
     <tr></tr>
 </table>
+<a href="?hapus_semua=expired">Hapus semua yang expired</a>
 <?php
 f("webview._layout.base")("end");

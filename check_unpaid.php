@@ -13,7 +13,7 @@ if(empty($unpaid_list)){
     dd("Tidak ada transaksi yang belum dibayar.");
 }
 ?>
-<table>
+<table class="table">
     <tr>
         <th>No</th>
         <th>Tanggal</th>

@@ -19,8 +19,8 @@ if(!empty($_POST)){
     }
     if(!$fail){
         $strlen = strlen($_POST['password']??'');
-        if($strlen < 12){
-            $err = "Jumlah karakter password tidak boleh kurang dari 12.";
+        if($strlen < 8){
+            $err = "Jumlah karakter password tidak boleh kurang dari 8.";
             $fail = true;
         }
     }
@@ -28,6 +28,13 @@ if(!empty($_POST)){
         $_POST['username'] = strtolower($_POST['username']);
         if(!preg_match('/^[a-z0-9_]+$/',$_POST['username'])){
             $err = "Untuk username, simbol yang dibolehkan hanya underscore (_). Tidak boleh juga mengandung spasi.";
+            $fail = true;
+        }
+    }
+    if(!$fail){
+        //sys admin user
+        if($_POST['username'] == strtolower(f("get_config")("sysadmin_user",""))){
+            $err = "Username ini sudah ada, gunakan yang lain";
             $fail = true;
         }
     }

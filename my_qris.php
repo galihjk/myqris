@@ -75,6 +75,7 @@ if(!empty($_GET['trx'])){
             <div style="text-align:center; color:lightgray; font-style: italic;">
                 <small>*Klik QR Code di atas untuk mengunduhnya.</small><br>
             </div>
+            <iframe src="job_check.php?u=<?=urlencode($_GET['u'])?>&id=<?=$data['cliTrxNumber']?>" style="width: 0px; height: 0px"></iframe>
             <a style='font-size: x-large;' href='check.php?u=<?=urlencode($_GET['u'])?>&id=<?=$data['cliTrxNumber']?>'>
                 [CEK PEMBAYARAN]
             </a>
@@ -108,21 +109,33 @@ if(!empty($_GET['trx'])){
 }
 f("webview._layout.base")("start");
 ?>
-<h1><img src="assets/img/logo1.jpg" style="width: 121px;"></h1>
-<hr>
-<div style="text-align: center;">
-    <form id="myForm" method="POST" action="?u=<?=urlencode($_GET['u'])?>">
-        User:<br>
-        <strong><?=$user['username']?></strong><br>
-        <br>
-        Nilai:<br>
-        <input name="nilai" type="number" required min="1" <?=(!empty($_GET['n']) ? 'value="'.$_GET['n'].'"' : '')?>/><br>
-        <br>
-        Keterangan:<br>
-        <textarea name="keterangan"><?=(!empty($_GET['k']) ? $_GET['k'] : '')?></textarea><br>
-        <br>
-        <input type="submit" />
-    </form>
+<div class="container mt-4">
+    <h1 class="text-center">
+        <img src="assets/img/logo1.jpg" class="img-fluid" style="max-width: 121px;" alt="Logo">
+    </h1>
+    <hr>
+    <div class="text-center">
+        <form id="myForm" method="POST" action="?u=<?= urlencode($_GET['u']) ?>">
+            <div class="mb-3">
+                <label for="username" class="form-label">User:</label>
+                <strong id="username"><?=$user['username']?></strong>
+            </div>
+            <div class="mb-3">
+                <label for="nilai" class="form-label">Nilai:</label>
+                <input id="nilai" name="nilai" type="number" class="form-control" required min="1"
+                    <?=(!empty($_GET['n']) ? 'value="'.htmlspecialchars($_GET['n']).'"' : '')?>>
+            </div>
+            <div class="mb-3">
+                <label for="keterangan" class="form-label">Keterangan:</label>
+                <textarea id="keterangan" name="keterangan" class="form-control"><?=(!empty($_GET['k']) ? htmlspecialchars($_GET['k']) : '')?></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Buat QRIS</button>
+            <div class="text-danger mt-3">
+                <i class="fa fa-exclamation-triangle"></i>
+                Setelah transaksi QRIS berhasil, klik <strong>[CEK PEMBAYARAN]</strong>
+            </div>
+        </form>
+    </div>
 </div>
 <?php
 if(!empty($_GET['n'])){

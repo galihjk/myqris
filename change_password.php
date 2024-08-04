@@ -23,8 +23,8 @@ if(!empty($_POST)){
     }
     if(!$fail){
         $strlen = strlen($_POST['password']??'');
-        if($strlen < 12){
-            $err = "Jumlah karakter password tidak boleh kurang dari 12.";
+        if($strlen < 8){
+            $err = "Jumlah karakter password tidak boleh kurang dari 8.";
             $fail = true;
         }
     }
@@ -51,20 +51,45 @@ if(!empty($_POST)){
     <?php
     f("webview._layout.base")("exit");
 }
-f("webview._layout.base")("start");
+f("webview._layout.base")("start",['title'=>'Ubah Password']);
 ?>
-<h2>Ubah Password</h2>
-<form method="post" action="?p=<?=urlencode($_GET['p'])?>">
-    <div>
-        user <strong><?=$user['username']?></strong>
-    </div>
-    <div>
-        password <input type="password" placeholder="password" name="password" required /> minimal 12 karakter
-    </div>
-    <div>
-        konfirmasi password <input type="password" placeholder="konfirmasi password" name="repassword" required />
-    </div>
-    <input type="submit" />
-</form>
+<div class="container mt-5">
+    <h2 class="mb-4">Ubah Password</h2>
+    <form method="post" action="?p=<?=urlencode($_GET['p'])?>" onsubmit="return validatePassword()">
+        <div class="mb-3">
+            <label class="form-label">User</label>
+            <p><strong><?=$user['username']?></strong></p>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="password" name="password" required />
+            <small class="form-text text-muted">Minimal 8 karakter, harus mengandung huruf besar, huruf kecil, dan angka</small>
+        </div>
+        <div class="mb-3">
+            <label for="repassword" class="form-label">Konfirmasi Password</label>
+            <input type="password" class="form-control" id="repassword" placeholder="konfirmasi password" name="repassword" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<script>
+    function validatePassword() {
+        const password = document.getElementById('password').value;
+        const repassword = document.getElementById('repassword').value;
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+        if (!passwordPattern.test(password)) {
+            alert('Password harus minimal 8 karakter dan mengandung huruf besar, huruf kecil, dan angka.');
+            return false;
+        }
+
+        if (password !== repassword) {
+            alert('Konfirmasi password harus sama dengan password.');
+            return false;
+        }
+
+        return true;
+    }
+</script>
 <?php
 f("webview._layout.base")("end");

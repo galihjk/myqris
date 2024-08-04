@@ -84,7 +84,7 @@ $GLOBALS['page_script'] = ob_get_clean();
                                             <input class="form-control" type="password" onchange="rememberPassword()" placeholder="password" id="password" name="password" required />
                                             <label for="password">Password</label>
                                         </div>
-                                        <div class="form-check mb-3">
+                                        <div class="form-check mb-3 text-start">
                                             <input class="form-check-input" id="inputRememberPassword" onclick="rememberPassword()" type="checkbox" value="" />
                                             <label class="form-check-label" for="inputRememberPassword">Ingat User Name dan Password</label>
                                         </div>
@@ -123,7 +123,7 @@ $GLOBALS['page_script'] = ob_get_clean();
                 </main>
             </div>
             <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
+                <footer class="py-4 mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
                             <div class="text-muted">Copyright &copy; 2024</div>

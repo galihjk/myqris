@@ -14,7 +14,15 @@ function qris__make($cliTrxAmount, $userid = "", $keterangan = ""){
     $data_api_json = file_get_contents("$api_url?$api_q_param");
     // dd($data_api_json);
     $data_api = json_decode($data_api_json,true);
-    if(empty($data_api['data']['qris_content'])) die("Mohon maaf, telah terjadi kesalahan.");
+    if(empty($data_api['data']['qris_content'])) {
+        $errordate = date("Y-m-d-H-i-s-").rand(100,999);
+        f("data.save")("ERR $errordate",[
+            "$api_url?$api_q_param",
+            $data_api_json,
+            $data_api,
+        ]);
+        die("Mohon maaf, telah terjadi kesalahan. Kode: $errordate");
+    }
     if(empty($userid)) $userid = $_SESSION['user']['id'];
     $data = [
         'qris_content'=>$data_api['data']['qris_content'],

@@ -1,6 +1,9 @@
 <?php
 include("init.php");
 f("webview._layout.base")("start");
+if(empty($_GET['id'])){
+    dd("ERROR: empty id");
+}
 $last_check_status = f("data.load")("last_check_status",0);
 $current_time = time();
 if($current_time < $last_check_status+6){

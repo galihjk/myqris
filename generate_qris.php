@@ -17,15 +17,23 @@ if(!empty($_POST)){
 }
 f("webview._layout.base")("start");
 ?>
-<h2>Generate Qris</h2>
-<form method="POST">
-Nilai:<br>
-<input name="nilai" type="number" required min="1" placeholder="Masukan nilai nominal"/><br>
-<br>
-Keterangan:<br>
-<textarea name="keterangan"></textarea><br>
-<br>
-<input type="submit" />
-</form>
+<div class="container mt-5">
+    <h2 class="mb-4">Generate Qris</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="nilai" class="form-label">Nilai:</label>
+            <input id="nilai" name="nilai" type="number" class="form-control" required min="1" placeholder="Masukkan nilai nominal">
+        </div>
+        <div class="mb-3">
+            <label for="keterangan" class="form-label">Keterangan:</label>
+            <textarea id="keterangan" name="keterangan" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="text-danger mt-3">
+            <i class="fa fa-exclamation-triangle"></i>
+            Setelah transaksi QRIS berhasil, klik <strong>[CEK PEMBAYARAN]</strong>
+        </div>
+    </form>
+</div>
 <?php
 f("webview._layout.base")("end");

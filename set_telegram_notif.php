@@ -23,15 +23,25 @@ if(!empty($_POST['id'])){
     }
 }
 ?>
-<h2>Set Telegram Notification</h2>
-<form method="POST">
-Telegram Chat ID: 
-<input type='text' name='id' value='<?=$telegramid?>'/>
-<input type='submit'/>
-</form>
-<div style='font-size: x-large; color:red; font-weight: bold;'><?=$result?></div>
-<hr>
-<div>
+<div class="container mt-5">
+    <h2>Set Telegram Notification</h2>
+    <form method="POST">
+    Telegram Chat ID: 
+    <input type='text' name='id' value='<?=$telegramid?>'/>
+    <input type='submit'/>
+    </form>
+    <div style='font-size: x-large; color:red; font-weight: bold;'><?=$result?></div>
+    <hr>
+    <h4>
+        Notifikasi akan dikirim oleh bot <a target="_blank" href='https://t.me/<?=f("get_config")("bot_username")?>'>@<?=f("get_config")("bot_username")?></a>, 
+        <br>pastikan bot tersebut memiliki hak untuk mengirimkannya. 
+        <br> Harap start bot untuk notifikasi ke private chat.
+    </h4>
+    <small>
+        ID bisa didapatkan dari <a target="_blank" href='https://t.me/getmyid_bot'>@getmyid_bot</a>
+    </small>
+</div>
+<!-- <div>
     <ul>
         <li>
             Cara mengatur notif untuk akun <strong>telegram pribadi</strong>:
@@ -56,6 +66,6 @@ Telegram Chat ID:
             </ul>
         </li>
     </ul>
-</div>
+</div> -->
 <?php
 f("webview._layout.base")("end");

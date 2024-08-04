@@ -58,27 +58,39 @@ if(!empty($_POST)){
         exit();
     }
     if(empty($_POST['yakin'])){
-        f("webview._layout.base")("start");
+        f("webview._layout.base")("start",['body_class'=>'container mt-5']);
         ?>
-            <h1>Apakah anda yakin?</h1>
-            <form method="POST">
-                <input type="hidden" name="yakin" value="1"/>
-                Kirim Ke: <strong><?=$_POST['username']?></strong><br>
-                Nilai: <strong><?=number_format($_POST['nilai'],2,',','.')?></strong><br>
-                Keterangan: <textarea disabled><?=str_replace('"','&quot;',$_POST['keterangan'])?></textarea>
-                <br>
-                <?php
-                foreach($_POST as $k=>$v){
-                    $v = str_replace('"','&quot;',$v);
-                    echo "<input type='hidden' name='$k' value=\"$v\" />";
-                }
-                ?>
-                <br>
-                <input type="submit" value="Ya" />
-                <br>
-                <br>
-                <button type="button" onclick="history.back()">Tidak</button>
-            </form>
+        <h1 class="mb-4">Apakah Anda Yakin?</h1>
+        <form method="POST">
+            <input type="hidden" name="yakin" value="1"/>
+
+            <div class="mb-3">
+                <label class="form-label">Kirim Ke:</label>
+                <p class="form-control-plaintext"><strong><?=$_POST['username']?></strong></p>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Nilai:</label>
+                <p class="form-control-plaintext"><strong><?=number_format($_POST['nilai'],2,',','.')?></strong></p>
+            </div>
+
+            <div class="mb-3">
+                <label for="keterangan" class="form-label">Keterangan:</label>
+                <textarea id="keterangan" class="form-control" rows="3" disabled><?=str_replace('"','&quot;',$_POST['keterangan'])?></textarea>
+            </div>
+
+            <?php
+            foreach($_POST as $k=>$v){
+                $v = str_replace('"','&quot;',$v);
+                echo "<input type='hidden' name='$k' value=\"$v\" />";
+            }
+            ?>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary">Ya</button>
+                <button type="button" class="btn btn-secondary" onclick="history.back()">Tidak</button>
+            </div>
+        </form>
         <?php
         f("webview._layout.base")("exit");
     }
@@ -145,16 +157,31 @@ if(!empty($_POST)){
     header("Location: $url");
     exit();
 }
-f("webview._layout.base")("start");
+f("webview._layout.base")("start",['body_class'=>'container mt-5']);
 ?>
 <h2>Kirim ke sesama pengguna</h2>
 <form method="POST">
-    Saldo Anda: <strong><?=$user['saldo']?></strong><br>
-    Kirim Ke: <input name="username" type="text" required placeholder="username"/><br>
-    Nilai: <input style="width:170px;" max="<?=$user['saldo']?>" name="nilai" type="number" required min="0" placeholder="Mau kirim berapa?"/><br>
-    Keterangan: <textarea name="keterangan"></textarea>
-    <br>
-    <input type="submit"/>
+    <div class="mb-3">
+        <label for="saldo" class="form-label">Saldo Anda:</label>
+        <p id="saldo" class="form-control-plaintext"><strong><?=number_format($user['saldo'],2,',','.')?></strong></p>
+    </div>
+    
+    <div class="mb-3">
+        <label for="username" class="form-label">Kirim Ke:</label>
+        <input id="username" name="username" type="text" class="form-control" required placeholder="username"/>
+    </div>
+    
+    <div class="mb-3">
+        <label for="nilai" class="form-label">Nilai:</label>
+        <input id="nilai" style="width: 100%;" max="<?=$user['saldo']?>" name="nilai" type="number" class="form-control" required min="0" placeholder="Mau kirim berapa?"/>
+    </div>
+    
+    <div class="mb-3">
+        <label for="keterangan" class="form-label">Keterangan:</label>
+        <textarea id="keterangan" name="keterangan" class="form-control" rows="3"></textarea>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 <?php
 f("webview._layout.base")("end");

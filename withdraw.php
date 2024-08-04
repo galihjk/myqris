@@ -1,7 +1,7 @@
 <?php
 include("init.php");
 $user = f("cek_login")();
-f("webview._layout.base")("start");
+f("webview._layout.base")("start",['body_class'=>'container mt-5']);
 ?>
 <h2>Withdraw</h2>
 <?php
@@ -90,24 +90,37 @@ else{
     $biaya_withdraw = f("get_config")("biaya_withdraw")[$metode_dipilih];
     ?>
     <form method="POST">
-        Saldo Anda: <strong><?=number_format($user['saldo'],2,',','.')?></strong><br>
-        Withdraw: <input id="nilai" value="<?=$_GET['nilai'] ?? ''?>" name="nilai" type="number" required max="<?=$user['saldo'] - $biaya_withdraw?>" placeholder="Mau ambil berapa?"/><br>
-        Metode: <select id="metode" name="metode" onchange="pilihMetode()">
-            <?php foreach(array_keys(f("get_config")("biaya_withdraw")) as $item){
-                ?>
-                <option value="<?=$item?>" <?=($metode_dipilih == $item ? 'selected' : '')?>><?=$item?></option>
-                <?php
-            }
-            ?>
-        </select><br>
-        Biaya Admin: <strong><?=number_format($biaya_withdraw,2,',','.')?></strong><br>
-        <input id="submit" type="submit" />
+        <div class="mb-3">
+            <label for="saldo" class="form-label">Saldo Anda:</label>
+            <p id="saldo" class="form-control-plaintext"><strong><?=number_format($user['saldo'],2,',','.')?></strong></p>
+        </div>
+        
+        <div class="mb-3">
+            <label for="nilai" class="form-label">Withdraw:</label>
+            <input id="nilai" value="<?=$_GET['nilai'] ?? ''?>" name="nilai" type="number" class="form-control" required max="<?=$user['saldo'] - $biaya_withdraw?>" placeholder="Mau ambil berapa?"/>
+        </div>
+        
+        <div class="mb-3">
+            <label for="metode" class="form-label">Metode:</label>
+            <select id="metode" name="metode" class="form-select" onchange="pilihMetode()">
+                <?php foreach(array_keys(f("get_config")("biaya_withdraw")) as $item): ?>
+                    <option value="<?=$item?>" <?=($metode_dipilih == $item ? 'selected' : '')?>><?=$item?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        
+        <div class="mb-3">
+            <label for="biaya-admin" class="form-label">Biaya Admin:</label>
+            <p id="biaya-admin" class="form-control-plaintext"><strong><?=number_format($biaya_withdraw,2,',','.')?></strong></p>
+        </div>
+        
+        <button id="submit" type="submit" class="btn btn-primary">Submit</button>
     </form>
     <script>
-        function pilihMetode(){
+        function pilihMetode() {
             var url = "withdraw.php";
-            url += "?nilai="+document.getElementById("nilai").value;
-            url += "&metode="+document.getElementById("metode").value;
+            url += "?nilai=" + encodeURIComponent(document.getElementById("nilai").value);
+            url += "&metode=" + encodeURIComponent(document.getElementById("metode").value);
             window.location.replace(url);
         }
     </script>

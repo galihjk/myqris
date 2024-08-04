@@ -5,7 +5,7 @@ $unpaid_list = f("data.list")("trx");
 foreach($unpaid_list as $k=>$v){
     if(!f("str.is_diawali")($v,$user['id']."-")) unset($unpaid_list[$k]);
 }
-f("webview._layout.base")("start");
+f("webview._layout.base")("start",['body_class'=>'container mt-5']);
 ?>
 <h2>List Unpaid Qris</h2>
 <?php

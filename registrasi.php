@@ -2,6 +2,10 @@
 include("init.php");
 if(!empty($_POST)){
     $fail = false;
+    if (strtoupper($_POST['captcha_input']) != $_SESSION['captcha_text']) {
+        $err = "Captcha tidak valid. Silakan coba lagi. Pastikan Anda memasukkan teks yang Anda lihat di gambar dengan benar.".$_SESSION['captcha_text'];
+        $fail = true;
+    }
     if($_POST['password'] != $_POST['repassword']){
         $err = "Password konfirmasi tidak sama.";
         $fail = true;
@@ -73,28 +77,46 @@ if(!empty($_POST)){
     <?php
     f("webview._layout.base")("exit");
 }
-f("webview._layout.base")("start");
+
+f("webview._layout.base")("start",['title'=>'Registrasi']);
 ?>
+<script>
+    function validateForm() {
+        var password = document.getElementById("password").value;
+        var repassword = document.getElementById("repassword").value;
+        if (password !== repassword) {
+            alert("Password dan Konfirmasi Password tidak sama.");
+            return false;
+        }
+        return true;
+    }
+</script>
 <h2>Registrasi</h2>
-<form method="post">
-    <div>
-        username 
-        <input style="text-transform: lowercase;" type="text" placeholder="username" name="username" required /> simbol yang boleh digunakan hanya underscore (_), minimal 4 karakter, maksimal 15 karakter. Tidak mengandung spasi.
-    </div>
-    <div>
-        password <input type="password" placeholder="password" name="password" required /> minimal 12 karakter
-    </div>
-    <div>
-        konfirmasi password <input type="password" placeholder="konfirmasi password" name="repassword" required />
-    </div>
-    <div>
-        data diri lainnya... (underconstruction)
-        <input type="text" />
-    </div>
-    <div>
-        CAPTCHA <input type="text" placeholder="CAPTCHA" name="CAPTCHA "/> (underconst, bebas aja)
-    </div>
-    <input type="submit" />
-</form>
+<div class="container mt-5 text-start">
+    <form method="post" onsubmit="return validateForm()">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="username" style="text-transform: lowercase;" required 
+                    pattern="^[a-z0-9_]{4,15}$" title="Simbol yang boleh digunakan hanya underscore (_), minimal 4 karakter, maksimal 15 karakter. Tidak mengandung spasi.">
+            <div class="form-text">Simbol yang boleh digunakan hanya underscore (_), minimal 4 karakter, maksimal 15 karakter. Tidak mengandung spasi.</div>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="password" required 
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Minimal 8 karakter, harus mengandung huruf besar, huruf kecil, dan angka.">
+            <div class="form-text">Minimal 8 karakter, harus mengandung huruf besar, huruf kecil, dan angka.</div>
+        </div>
+        <div class="mb-3">
+            <label for="repassword" class="form-label">Konfirmasi Password</label>
+            <input type="password" class="form-control" id="repassword" name="repassword" placeholder="konfirmasi password" required>
+        </div>
+        <div class="mb-3">
+            <img src="captcha.php" alt="CAPTCHA" class="mb-2">
+            <label for="captcha_input" class="form-label">Masukkan teks yang Anda lihat di gambar</label>
+            <input type="text" class="form-control" id="captcha_input" name="captcha_input" style="text-transform: uppercase;" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
 <?php
 f("webview._layout.base")("end");

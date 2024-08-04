@@ -1,9 +1,7 @@
-<h1><img src="assets/img/logo1.jpg" style="width: 121px;"></h1>
-<hr>
 <?php
 include("init.php");
 $user = f("cek_login")();
-f("webview._layout.base")("start");
+f("webview._layout.base")("start",['body_class'=>'container mt-5']);
 $page = ($_GET['page'] ?? 1);
 $rowperpage = f("get_config")("history_per_page",2);
 $last_id = (empty($_GET['last_id']) ? false : $_GET['last_id']);
@@ -45,7 +43,7 @@ else{
 }
 ?>
 <br><br>
-<table border=1>
+<table class="table">
     <thead>
         <tr>
             <th>No</th>
